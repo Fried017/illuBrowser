@@ -27,7 +27,7 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
-                        <outlet property="mainImage" destination="0nK-PH-4Sm" id="cae-5Q-vbN"/>
+                        <outlet property="imageView" destination="0nK-PH-4Sm" id="cae-5Q-vbN"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -35,6 +35,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="noImage" width="16" height="16"/>
+        <image name="noImage" width="206" height="245"/>
     </resources>
 </document>

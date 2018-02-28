@@ -30,7 +30,7 @@ class Illustration {
         color = defaultColor
         
         image = fetchImage()
-        color = findMainColor()
+        setColor(targetColor: findMainColor())
     }
     
     //Finds the main color of the image
@@ -38,6 +38,19 @@ class Illustration {
     {
         //ToDo: Calculate the main color of the image
         //Add every pixel to a color range, select most populated range
+        //let groupBy = 15
+        
+        
+        //All colors found so far
+        /*
+        var colors = [UIColor: Int]()
+        
+        for y in 0 ..< Int(image.size.height) {
+            for x in 0 ..< Int(image.size.width){
+                
+            }
+        }
+        */
         return UIColor.cyan
     }
     
@@ -52,6 +65,24 @@ class Illustration {
         
         //ToDo: Check of found data is an image, if not return missingImage
         return image;
+    }
+    
+    //Returns an IllustrationCollection of images related to this one
+    func getRelatedIllustrations()->IllustrationCollection
+    {
+        //Create an empty collection
+        var illuCollection: IllustrationCollection = IllustrationCollection()
+        
+        //Add images to collection that are related.
+        //ToDo: Go though tags to find most related images. Sort by popularity default
+        
+        return illuCollection
+    }
+    
+    //Set the color for this image
+    func setColor(targetColor: UIColor)
+    {
+        color = targetColor
     }
     
     //Add an IllustrationExtra to this illu
@@ -75,9 +106,17 @@ class Illustration {
             collections.append(collection)
         }
     }
+    
+    //Returns all of the required panels for this illu
+    func panelsForIllustration()->[Panel]
+    {
+        var panels: [Panel] = []
+        
+        return panels;
+    }
 }
 
-//An extra Panel to be
+//Extra info for an illustration to display
 class IllustrationExtra{
     
     }
@@ -93,19 +132,74 @@ class IllustrationExtra_Reference : IllustrationExtra{
     }
 }
 
+//Panels are the building blocks of the illustration browser
+class Panel{
+    func fillIn()
+    {
+        
+    }
+    
+    func hide()
+    {
+        
+    }
+    
+    func show()
+    {
+        
+    }
+}
+
+//The panel that holds the current main illustration
+class Panel_Main{
+    var illustration: Illustration
+    
+    init(panelIllustration: Illustration)
+    {
+        illustration = panelIllustration
+    }
+}
+
+//Panel that contains related images for Panel_Main
+class Panel_Related{
+    var illustrations: IllustrationCollection
+    
+    init(mainIllustration: Illustration)
+    {
+        illustrations = mainIllustration.getRelatedIllustrations()
+    }
+}
+
+class IllustrationCollection
+{
+    var illustrations: [Illustration] = []
+    
+}
+
 class ViewController: UIViewController {
 
-    @IBOutlet weak var mainImage: UIImageView!
+    @IBOutlet weak var imageView: UIImageView!
+    //The main panel is limited to just one so using a static var
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //Main panel and array to hold all secondary panels
+        var panels:[Panel]=[]
+        var mainPanel: Panel_Main
+        
+        //HardCoding the 'database' for now
+        //ToDo: Figure out a real database solution
         var mainIllustration: Illustration
         mainIllustration = Illustration(illuUrl: "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png", illuTitle: "Google")
         
-        //Test out an Illustration object
-        mainImage.image = mainIllustration.image
+        mainPanel = Panel_Main(panelIllustration: mainIllustration)
         
+        imageView.image = mainPanel.illustration.image
+        mainPanel.illustration.setColor(targetColor: UIColor.red)
+        panels = mainPanel.illustration.panelsForIllustration()
+        
+        view.backgroundColor = mainIllustration.color
         //Build correct panels for this illustration
     }
 
